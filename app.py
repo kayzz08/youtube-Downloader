@@ -16,26 +16,17 @@ st.write("Paste a YouTube URL below to download the video")
 # Input for YouTube URL
 url = st.text_input("YouTube URL:", placeholder="https://www.youtube.com/watch?v=...")
 
-# Quality selection
-quality = st.selectbox("Select quality:", ["best", "720p", "480p", "360p"])
+# Quality selection - using formats that don't require merging
+quality = st.selectbox("Select quality:", 
+                      ["best[ext=mp4]", "worst[ext=mp4]", "best[height<=720][ext=mp4]", "best[height<=480][ext=mp4]"])
 
 if st.button("Download Video"):
     if url:
         try:
             with st.spinner("Downloading... Please wait"):
-                # Set up download options
-                if quality == "720p":
-                    format_selection = 'bestvideo[height<=720]+bestaudio/best[height<=720]'
-                elif quality == "480p":
-                    format_selection = 'bestvideo[height<=480]+bestaudio/best[height<=480]'
-                elif quality == "360p":
-                    format_selection = 'bestvideo[height<=360]+bestaudio/best[height<=360]'
-                else:
-                    format_selection = 'bestvideo+bestaudio/best'
-                
+                # Use formats that don't require merging (single file mp4)
                 ydl_opts = {
-                    'format': format_selection,
-                    'merge_output_format': 'mp4',
+                    'format': quality,
                     'outtmpl': '%(title)s.%(ext)s',
                 }
 
