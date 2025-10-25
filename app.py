@@ -18,7 +18,6 @@ url = st.text_input("YouTube URL:", placeholder="https://www.youtube.com/watch?v
 
 # Quality selection
 quality = st.selectbox("Select quality:", ["best", "720p", "480p", "360p"])
-
 if st.button("Download Video"):
 if url:
 try:
